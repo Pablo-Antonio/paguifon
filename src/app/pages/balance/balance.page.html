@@ -1,0 +1,195 @@
+<app-header></app-header>
+
+<ion-content fullscreen="true">
+
+  <ion-card>
+    <ion-card-header style="text-align: center;">
+      <ion-card-title>CONSULTA DE SALDO</ion-card-title>
+    </ion-card-header>
+    <form [formGroup]="numberForm" (submit)="submit()">
+      <ion-item class="item_before">
+        <ion-input type="number" placeholder="Número telefónico" formControlName="phone_number" maxlength="32">
+        </ion-input>
+      </ion-item>
+      <br>
+      <ion-button type="submit" [disabled]="!numberForm.valid">ENVIAR</ion-button>
+    </form>
+  </ion-card>
+
+  <ion-card *ngIf="data">
+    <ion-card-header class="ion-no-padding ion-padding-horizontal ion-padding-top">
+      <ion-card-title >Consumo de: <ion-label [innerHTML]="data.phone_number"></ion-label>
+      </ion-card-title>
+    </ion-card-header>
+    <br>
+    <h2>Disponibles:</h2>
+    <hr>
+    <br>
+    <ion-list>
+      <ion-item lines="none" id="days-left">
+        <img slot="start" style="width: 20px;" src="../../../assets/img/vigencia.png">
+        Vigencia
+        <div slot="end">
+          {{formatDate(data.effective_date) | date: 'shortDate'}} - {{formatDate(data.expire_date) | date: 'shortDate'}}
+        </div>
+      </ion-item>
+      <ion-popover trigger="days-left" side="bottom" size="cover">
+        <ng-template>
+          <ion-item lines="none">
+            <ion-label id="pop_left_days">Te quedan {{data.daysLeft}} días de beneficios</ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-popover>
+
+      <ion-item lines="none" class="ion-margin-top">
+        <img slot="start" style="width: 20px;" src="../../../assets/img/datos.png">
+        Datos
+        <span slot="end">{{data.data.unused / 1000 | number:'.0-2'}} / {{data.data.total / 1000 | number:'.0-2'}}
+          GB</span>
+      </ion-item>
+
+      <ng-container *ngIf="data.data_velRed.total">
+        <ion-item class="ion-margin-top">
+          <ion-icon slot="start" src="../../../assets/icon/datos.svg" color="primary"></ion-icon>
+          Velocidad Reducida
+          <span slot="end">{{data.data_velRed.unused / 1000 | number:'.0-2'}} / {{data.data_velRed.total / 1000 |
+            number:'.0-2'}} GB</span>
+        </ion-item>
+        <ion-progress-bar color="primary" [value]="1 - data.percentVelRed"></ion-progress-bar>
+      </ng-container>
+      
+      <ng-container *ngIf="data.data_thr.total">
+        <ion-item lines="none">
+          <ion-icon slot="start" src="../../../assets/icon/puj.svg" color="primary"></ion-icon>
+          Uso Justo
+          <span slot="end">{{data.data_thr.unused / 1000 | number:'.0-2'}} / {{data.data_thr.total / 1000 |
+            number:'.0-2'}} GB</span>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="data.data_free.total">
+        <ion-item lines="none">
+          <img slot="start" style="width: 20px;" src="../../../assets/img/promo.png">
+          Promociones
+          <span slot="end">{{data.data_free.unused / 1000 | number:'.0-2'}} / {{data.data_free.total / 1000 |
+            number:'.0-2'}} GB</span>
+        </ion-item>
+      </ng-container>
+
+      <ion-item lines="none" class="ion-margin-top">
+        <img slot="start" style="width: 20px;" src="../../../assets/img/minutos.png">
+        Minutos
+        <span slot="end">{{data.min.unused}} de {{data.min.total}} Min</span>
+      </ion-item>
+      <ion-item lines="none">
+        <img slot="start" style="width: 20px;" src="../../../assets/img/sms.png">
+        Mensajes
+        <span slot="end">{{data.sms.unused}} de {{data.sms.total}} SMS</span>
+      </ion-item>
+    </ion-list>
+    <ng-container *ngIf="selfConsul == data.phone_number; else self">
+      <ion-button expand="block" fill="clear" (click)="delePNumber()" color="danger">Remover número</ion-button>
+    </ng-container>
+    <ng-template #self>
+      <ion-button expand="block" fill="clear" (click)="savePNumber(data.phone_number)">Guardar número</ion-button>
+    </ng-template>
+  </ion-card>
+</ion-content>
+
+<style>
+  @font-face {
+    font-family: "Montserrat";
+    src: url("../../../assets/fonts/Montserrat-Medium.ttf");
+  }
+
+  * {
+    font-family: "Montserrat";
+    font-weight: 600;
+  }
+
+  ion-button {
+    --background: #500771 !important;
+    border-radius: 5px;
+    --color: #fff;
+    --height: 50px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  ion-button[disabled] {
+    opacity: 1 !important;
+  }
+
+  ion-card {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  ion-card-header {
+    padding-top: 0;
+  }
+
+  ion-item {
+    --height: 50px;
+    font-size: small;
+    color: #000;
+    margin: -10px;
+    padding: 0;
+  }
+
+  ion-card-title {
+    font-size: medium;
+    color: #fff;
+    text-shadow: 2px 2px #FF0054;
+    margin-left: -16px;
+    font-weight: 800 !important;
+  }
+
+  ion-input {
+    border: 1px solid #000;
+    border-radius: 10px;
+    --padding-start: 10px !important;
+  }
+
+  .item_before {
+    color: #000;
+    font-size: medium;
+    margin-left: -16px;
+  }
+
+  .title_after {
+    color: #000;
+    font-size: medium;
+  }
+
+  ion-label {
+    font-size: medium;
+    color: #000;
+    /*text-shadow: 2px 2px #FF0054;*/
+    font-weight: 800;
+  }
+
+  ion-list {
+    background-color: transparent;
+  }
+
+  h2 {
+    color: #000;
+    font-size: medium;
+    margin-left: 33.33%;
+  }
+
+  hr {
+    border-bottom: 1px solid #fff;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  #pop_left_days {
+    color: #000;
+    width: 100%;
+    text-align: center;
+  }
+
+</style>
+<app-footer></app-footer>

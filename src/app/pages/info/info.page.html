@@ -1,0 +1,108 @@
+<app-header></app-header>
+
+<ion-content fullscreen="true">
+  
+  <div class="title_page">
+    <app-page-title [title]="title"></app-page-title>
+  </div>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>CONTACTO</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Esta app móvil ha sido diseñada y desarrollada por Addinteli. En este espacio podrás compartirnos tus dudas, solicitudes o comentarios referente al servicio Paguifon.
+      <br><br>
+      Correo de contacto: <span>soporte@paguifon.com.mx</span> o puedes llamar al <span>55 8854 6014</span>.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="commentForm" (submit)="submit()">
+        <p>Correo:</p>
+        <ion-item>
+          <ion-input formControlName="email" maxlength="128"></ion-input>
+        </ion-item>
+        <p>Asunto:</p>
+        <ion-item>
+          <ion-input formControlName="subject" maxlength="32"></ion-input>
+        </ion-item>
+        <p>Escribe tu mensaje:</p>
+        <ion-item>
+          <ion-textarea formControlName="comment" maxlength="250"></ion-textarea>
+        </ion-item>
+        <ion-button type="submit" [disabled]="!commentForm.valid">Enviar</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<style>
+  @font-face {
+    font-family: "Montserrat";
+    src: url("../../../assets/fonts/Montserrat-Medium.ttf");
+  }
+
+  * {
+      font-family: "Montserrat";
+  }
+
+  ion-button {
+    --background: #500771 !important;
+    --border-radius: 5px;
+    --color: #fff;
+    --height: 50px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  ion-button[disabled] {
+    opacity: 1 !important;
+  }
+
+  ion-card {
+    background-color: transparent;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+  }
+
+    ion-item {
+      --height: 50px;
+      border-radius: 10px !important;
+      border: 1px solid #000;
+    }
+
+  ion-card-title {
+    font-size: medium;
+    font-weight: 600;
+    color: #FF0054;
+    margin-left: -10px;
+  }
+
+  ion-card-content {
+    font-weight: 600;
+    color: #000;
+    margin-left: -10px;
+    text-align: justify;
+    font-size: small;
+    padding-top: 0;
+  }
+
+  span {
+    color: #FF0054;
+    font-weight: 400;
+  }
+
+  p {
+    color: #000;
+    font-weight: 800;
+    font-size: medium;
+    margin: 5px 0;
+  }
+
+</style>
+
+<app-footer></app-footer>

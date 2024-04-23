@@ -1,0 +1,134 @@
+<ion-content fullscreen="true">
+  <div class="text_end">
+    <div class="row">
+      <div class="col-6">
+        <img src="../../../assets/img/FB.png" (click)="openFb()" width="30px" />
+        <img src="../../../assets/img/IG.png" (click)="openIg()" width="30px" />
+        <img src="../../../assets/img/TT.png" (click)="openTT()" width="30px" />
+      </div>
+      <br />
+      <a (click)="openPagui()">paguifon.com.mx</a>
+      <br><br>
+      <!--<a [routerLink]="['/notice-privacy']">Aviso de privacidad</a>
+      <a [routerLink]="['/terms-conditions']">Términos y condiciones</a>-->
+    </div>
+    <p (click)="openAdd()">Powered by Addinteli 2022</p>
+  </div>
+  <div style="margin: 50px 0px; text-align: center">
+    <img src="../../../assets/img/logoPaguifon.png" width="55%" />
+    <br />
+    <br />
+    <h1>Menú principal</h1>
+  </div>
+  <app-page-title [title]="title"></app-page-title>
+
+  <ion-button (click)="openTopup()" expand="block" color="white">
+    <div class="text_left">
+      <ion-icon slot="start" name="reload-circle" style="color:#FF0054;"></ion-icon>
+      Recargar plan
+    </div>
+  </ion-button>
+
+  <ion-button *ngFor="let page of pages" [routerLink]="page.redirectTo" expand="block" color="white">
+    <div class="text_left">
+      <ion-icon slot="start" [name]="page.icon" style="color:#FF0054;"></ion-icon>
+      {{page.name | titlecase}}
+    </div>
+  </ion-button>
+
+  <!--<ion-button [routerLink]="['/balance']" expand="block" color="white">
+    <div class="text_left">
+      <ion-icon slot="start" name="square"></ion-icon>
+      Consulta tu saldo
+    </div>
+  </ion-button>
+  <ion-button (click)="openTopup()" expand="block" color="white">
+    <div class="text_left">
+      <ion-icon slot="start" name="square"></ion-icon>
+      Recargar plan
+    </div>
+  </ion-button>
+  <ion-button [routerLink]="['/info']" expand="block" color="white">
+    <div class="text_left">
+      <ion-icon slot="start" name="square"></ion-icon>
+      Contacto
+    </div>
+  </ion-button>-->
+
+</ion-content>
+
+<style>
+  /*ion-content {
+    --background: #fff;
+    border-bottom: 10px solid #FF0054;
+    border-top: 20px solid #FF0054;
+  }*/
+
+  @font-face {
+    font-family: "Montserrat";
+    src: url("../../../assets/fonts/Montserrat-Medium.ttf");
+  }
+
+  * {
+    font-family: "Montserrat";
+    color: #000;
+  }
+
+  ion-button {
+    margin: 0;
+    padding: 0;
+    height: auto;
+    --box-shadow: none !important;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  .text_left {
+    width: 80%;
+    padding: 8px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: left;
+    border-bottom: 1px solid #FF0054;
+  }
+
+  .text_left ion-icon {
+    margin-right: 8px;
+    font-size: small;
+    color: #FF0054;
+  }
+
+  .text_end {
+    width: 100%;
+    position: absolute;
+    top: 83%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 300;
+    font-size: small;
+  }
+
+  .text_end p {
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: small;
+  }
+
+  .row a {
+    text-decoration: none;
+    font-size: small;
+    margin-right: 10px;
+    font-weight: 400;
+  }
+
+  .row img {
+    margin-right: 10px;
+  }
+</style>
